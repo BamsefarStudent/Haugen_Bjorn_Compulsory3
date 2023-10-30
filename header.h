@@ -25,9 +25,9 @@ using namespace std;
 
 #pragma region Forward Declaration
 
-
-class Folder;
 class File;
+class Folder;
+
 string GetNameOfFolderForFile(Folder* folder);
 void RemoveFileIndexForFile(Folder* parent, int index);
 
@@ -443,11 +443,25 @@ public:
 	{
 		cout << "DELETING " << GetPathName() << " ..." << endl;
 
-		if (parentFolder != 0) parentFolder->RemoveSubFolderIndex(index);
-
 		delete this;
 	}
+
+	~Folder()
+	{
+		for (auto folder : subFolders)
+		{
+			if (folder != 0) folder->DestroyFolder();
+		}
+
+		for (auto file : subFiles)
+		{
+			if (file != 0) file->Delete();
+		}
+
+		if (parentFolder != 0) parentFolder->RemoveSubFolderIndex(index);
+	}
 };
+
 
 
 #pragma region Class Functions

@@ -17,5 +17,7 @@ int main()
 		WriteCurrentPath();
 	}
 
+	//delete all created Folders
+
 	return 0;
 }
